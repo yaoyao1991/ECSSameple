@@ -1,6 +1,6 @@
 ﻿using Entitas;
 
-public class EmitInputSystem : IInitializeSystem, IExecuteSystem, ITearDownSystem
+public class EmitInputSystem : IInitializeSystem, IExecuteSystem
 {
     Contexts _contexts;
     IInputService _inputService;
@@ -8,12 +8,12 @@ public class EmitInputSystem : IInitializeSystem, IExecuteSystem, ITearDownSyste
     public EmitInputSystem(Contexts contexts)
     {
         _contexts = contexts;
-        _inputService = _contexts.meta.inputService.instance;
     }
     public void Initialize()
     {
         _contexts.input.isInputManager = true;
         _inputEntity = _contexts.input.inputManagerEntity;
+        _inputService = _contexts.meta.inputService.instance;
     }
 
     public void Execute()
@@ -21,8 +21,4 @@ public class EmitInputSystem : IInitializeSystem, IExecuteSystem, ITearDownSyste
         _inputEntity.ReplaceMouseDown(_inputService.mouseDown);
     }
 
-    public void TearDown()
-    {
-        
-    }
 }

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class UnityInputService : IInputService
 {
-    private Dictionary<int,Vector2?> mouseDowns = new Dictionary<int, Vector2?>(5);
+    private Dictionary<int,Vector2?> _mouseDown = new Dictionary<int, Vector2?>(5);
     public Dictionary<int, Vector2?> mouseDown
     {
         get
@@ -15,56 +15,56 @@ public class UnityInputService : IInputService
 #if UNITY_EDITOR || !(UNITY_ANDROID || UNITY_IPHONE)
             if (Input.GetMouseButtonDown(0))
             {
-                if (mouseDown.ContainsKey(0))
+                if (_mouseDown.ContainsKey(0))
                 {
-                    mouseDown[0] = new Vector2(x, y);
+                    _mouseDown[0] = new Vector2(x, y);
                 }
                 else
                 {
-                    mouseDown.Add(0, new Vector2(x, y));
+                    _mouseDown.Add(0, new Vector2(x, y));
                 }
             }
             if (Input.GetMouseButtonDown(1))
             {
-                if (mouseDown.ContainsKey(1))
+                if (_mouseDown.ContainsKey(1))
                 {
-                    mouseDown[1] = new Vector2(x, y);
+                    _mouseDown[1] = new Vector2(x, y);
                 }
                 else
                 {
-                    mouseDown.Add(1, new Vector2(x, y));
+                    _mouseDown.Add(1, new Vector2(x, y));
                 }
             }
             if (Input.GetMouseButtonDown(2))
             {
-                if (mouseDown.ContainsKey(2))
+                if (_mouseDown.ContainsKey(2))
                 {
-                    mouseDown[2] = new Vector2(x, y);
+                    _mouseDown[2] = new Vector2(x, y);
                 }
                 else
                 {
-                    mouseDown.Add(2, new Vector2(x, y));
+                    _mouseDown.Add(2, new Vector2(x, y));
                 }
             }
             if (Input.GetMouseButtonUp(0))
             {
-                if (mouseDown.ContainsKey(0))
+                if (_mouseDown.ContainsKey(0))
                 {
-                    mouseDown[0] = null;
+                    _mouseDown[0] = null;
                 }
             }
             if (Input.GetMouseButtonUp(1))
             {
-                if (mouseDown.ContainsKey(1))
+                if (_mouseDown.ContainsKey(1))
                 {
-                    mouseDown[1] = null;
+                    _mouseDown[1] = null;
                 }
             }
             if (Input.GetMouseButtonUp(2))
             {
-                if (mouseDown.ContainsKey(2))
+                if (_mouseDown.ContainsKey(2))
                 {
-                    mouseDown[2] = null;
+                    _mouseDown[2] = null;
                 }
             }
 #else        
@@ -77,41 +77,41 @@ public class UnityInputService : IInputService
                 var pos2 = touch.position;
                 if (touch.phase == TouchPhase.Moved)
                 {                    
-                    if (mouseDown.ContainsKey(k))
+                    if (mouseDowns.ContainsKey(k))
                     {
-                        mouseDown[k] = new Vector2(pos2.x, pos2.y);
+                        mouseDowns[k] = new Vector2(pos2.x, pos2.y);
                     }
                     else
                     {
-                        mouseDown.Add(k, new Vector2(pos2.x, pos2.y));
+                        mouseDowns.Add(k, new Vector2(pos2.x, pos2.y));
                     }
                 }
                 else if (touch.phase == TouchPhase.Began)
                 {
-                    if (mouseDown.ContainsKey(k))
+                    if (mouseDowns.ContainsKey(k))
                     {
-                        mouseDown[k] = new Vector2(pos2.x, pos2.y);
+                        mouseDowns[k] = new Vector2(pos2.x, pos2.y);
                     }
                     else
                     {
-                        mouseDown.Add(k, new Vector2(pos2.x, pos2.y));
+                        mouseDowns.Add(k, new Vector2(pos2.x, pos2.y));
                     }
                 }
                 else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
                 {
-                    if (mouseDown.ContainsKey(k))
+                    if (mouseDowns.ContainsKey(k))
                     {
-                        mouseDown[k] = null;
+                        mouseDowns[k] = null;
                     }
                     else
                     {
-                        mouseDown.Add(k, null);
+                        mouseDowns.Add(k, null);
                     }
                 }
             }
         }
 #endif
-            return mouseDowns;
+            return _mouseDown;
         }
     }
 
@@ -123,7 +123,7 @@ public class UnityInputService : IInputService
             return Input.GetKey((KeyCode)key);
         }
 #endif
-        return mouseDowns.ContainsKey(key) && mouseDowns[key] != null;
+        return _mouseDown.ContainsKey(key) && _mouseDown[key] != null;
     }
 
     public int GetTouchcount()
