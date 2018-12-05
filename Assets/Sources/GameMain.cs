@@ -29,12 +29,15 @@ public class GameMain : MonoBehaviour {
             var e = _contexts.app.CreateEntity();
             e.AddScreen(100, 100);
             var log = _contexts.debug.CreateEntity();
-            log.AddDebugFatal("11111111111");
+            log.AddDebugSys("11111111111");
             var input = _contexts.input.inputManagerEntity;
             foreach (var down in input.mouseDown.mouseDown)
             {
-                var log2 = _contexts.debug.CreateEntity();
-                log2.AddDebugLog(down.Key + " " + down.Value.Value.x + " " + down.Value.Value.y);
+                if (down.Value.HasValue)
+                {
+                    var log2 = _contexts.debug.CreateEntity();
+                    log2.AddDebugLog(down.Key + " " + down.Value.Value.x + " " + down.Value.Value.y);
+                }
             }
         }
     }
