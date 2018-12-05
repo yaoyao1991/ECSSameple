@@ -4,16 +4,16 @@ using UnityEngine;
 
 public sealed class HandleDebugErrorSystem : ReactiveSystem<DebugEntity>
 {
-    ILogService _logService;
-    public HandleDebugErrorSystem(Contexts contexts, ILogService logService) : base(contexts.debug)
+    Contexts _contexts;
+    public HandleDebugErrorSystem(Contexts contexts) : base(contexts.debug)
     {
-        _logService = logService;
+        _contexts = contexts;
     }
     protected override void Execute(List<DebugEntity> entities)
     {
         foreach (var e in entities)
         {
-            _logService.ErrorMessage(e.debugFatal.message);
+            _contexts.meta.logService.instance.ErrorMessage(e.debugFatal.message);
             e.Destroy();
         }
     }

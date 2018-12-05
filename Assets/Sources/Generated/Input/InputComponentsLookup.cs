@@ -8,15 +8,18 @@
 //------------------------------------------------------------------------------
 public static class InputComponentsLookup {
 
+    public const int InputManager = 0;
+    public const int MouseDown = 1;
 
-
-    public const int TotalComponents = 0;
+    public const int TotalComponents = 2;
 
     public static readonly string[] componentNames = {
-
+        "InputManager",
+        "MouseDown"
     };
 
     public static readonly System.Type[] componentTypes = {
-
+        typeof(InputManagerComponent),
+        typeof(MouseDownComponent)
     };
 }

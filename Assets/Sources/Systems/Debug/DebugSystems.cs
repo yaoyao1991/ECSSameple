@@ -12,10 +12,9 @@ public class DebugSystems : Feature
 {
     public DebugSystems(Contexts contexts) : base("Debug systems")
     {
-        var service = new UnityDebugLogService();
-        Add(new HandleDebugLogSystem(contexts, service));
-        Add(new HandleDebugWarnSystem(contexts, service));
-        Add(new HandleDebugErrorSystem(contexts, service));
-        Add(new HandleDebugAssetSystem(contexts, service));
+        Add(new HandleDebugLogSystem(contexts));
+        Add(new HandleDebugWarnSystem(contexts));
+        Add(new HandleDebugErrorSystem(contexts));
+        Add(new HandleDebugAssetSystem(contexts));
     }
 }

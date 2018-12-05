@@ -4,16 +4,16 @@ using UnityEngine;
 
 public sealed class HandleDebugLogSystem : ReactiveSystem<DebugEntity>
 {
-    ILogService _logService;
-    public HandleDebugLogSystem(Contexts contexts, ILogService logService) : base(contexts.debug)
+    Contexts _contexts;
+    public HandleDebugLogSystem(Contexts contexts) : base(contexts.debug)
     {
-        _logService = logService;
+        _contexts = contexts;
     }
     protected override void Execute(List<DebugEntity> entities)
     {
         foreach (var e in entities)
         {
-            _logService.LogMessage(e.debugLog.message);
+            _contexts.meta.logService.instance.LogMessage(e.debugLog.message);
             e.Destroy();
         }
     }
